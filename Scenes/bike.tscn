@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3b2ki8hjuksk"]
+
+[ext_resource type="Script" uid="uid://b6l4t4dmak4j8" path="res://Scenes/bike.gd" id="1_8f0co"]
+[ext_resource type="PackedScene" uid="uid://cnstp4n6senc8" path="res://Scenes/bicycle.glb" id="2_hqb8h"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_77p72"]
+friction = 0.4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f5gm3"]
+size = Vector3(10.7369, 4.17664, 0.356726)
+
+[node name="Bike" type="VehicleBody3D"]
+mass = 200.0
+physics_material_override = SubResource("PhysicsMaterial_77p72")
+script = ExtResource("1_8f0co")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("2_hqb8h")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -2.52298, 0.0618849, 0.0205059)
+
+[node name="RayCast3D2" type="RayCast3D" parent="."]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 3.0755, 0.0752871, 0.0205059)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.422196, 3.50596, 0.0176409)
+shape = SubResource("BoxShape3D_f5gm3")
