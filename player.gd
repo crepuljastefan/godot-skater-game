@@ -4,9 +4,12 @@ extends CharacterBody3D
 @export var jump_impulse = 20
 var active = true
 var target_velocity = Vector3.ZERO
+var original_basis 
 
 func _physics_process(delta: float) -> void:
+	original_basis = $Pivot.basis
 	if active:
+		$Pivot.basis = original_basis
 		movement(delta)
 	else:
 		pass
