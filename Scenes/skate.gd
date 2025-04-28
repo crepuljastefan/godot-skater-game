@@ -9,8 +9,11 @@ var target_velocity = Vector3.ZERO
 var fall_acceleration = 20
 var is_player_attached = false
 var original_rotation
+var velocity_label
 func _ready() -> void:
 	player = $"../Player"
+	velocity_label = $CanvasLayer/Label
+	velocity_label.visible = false
 	original_rotation = player.rotation.normalized()
 	camera = get_parent().get_node("Player").get_child(3)
 func is_on_floor() -> bool:
@@ -26,10 +29,14 @@ func mount_player():
 		player.active = false
 		position = player.position
 		player.position = position + Vector3(0,0.5,0)
-		
+func _process(delta: float) -> void:
+	velocity_label.text = "Velocity: " + str(floor(linear_velocity.length()))
 func _physics_process(delta: float) -> void:
 	mount_player()
+	original_rotation = player.rotation
 	if is_player_attached:
+		velocity_label.visible =  true
+
 		if Input.is_action_just_pressed("ui_cancel"):
 			player.active = true
 			player.position = Vector3(0,0,0)
@@ -96,7 +103,10 @@ func _physics_process(delta: float) -> void:
 			
 		else:
 			engine_force = 0
-		
 
 		player.position = position
-		player.rotation = rotation
+		player.rotation.y = rotation.y
+		#player.rotation = rotation
+		
+	else:
+		velocity_label.visible = false	
