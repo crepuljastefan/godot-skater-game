@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 		rotation.y  += input_rotation.y
 		rotation.x += input_rotation.x
 		rotation.y = wrapf(rotation.y, 0.0, TAU)
-		rotation.x = clamp(rotation.x, -PI/2, 0)
+		rotation.x = clamp(rotation.x, -PI/2, PI/6)
 		input_rotation = Vector2.ZERO
 
 		
@@ -44,6 +44,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotation.y -= event.relative.x * mouse_sens
 		rotation.y = wrapf(rotation.y, 0.0, TAU)
 		rotation.x -= event.relative.y * mouse_sens
-		rotation.x = clamp(rotation.x, -PI/2, 0)
+		rotation.x = clamp(rotation.x, -PI/2,PI/6)
 		
 		
