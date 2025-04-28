@@ -29,7 +29,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00115967, 2.81945, 0.00784
 shape = SubResource("BoxShape3D_vgqql")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.40958, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.49759, 0)
 shape = SubResource("SphereShape3D_onrkg")
 spring_length = 6.0
 script = ExtResource("3_i3pqv")
