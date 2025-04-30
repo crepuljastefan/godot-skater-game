@@ -2,10 +2,16 @@ extends CharacterBody3D
 @export var speed = 14
 @export var fall_acceleration = 75
 @export var jump_impulse = 20
+@onready var anim_player : AnimationPlayer = $"Pivot/AnimationPlayer"
 var active = true
+var is_skating = false
 var target_velocity = Vector3.ZERO
 var original_basis 
-
+func _process(delta: float) -> void:
+	if is_skating:
+		anim_player.play("skate")
+	else:
+		anim_player.stop()
 func _physics_process(delta: float) -> void:
 	original_basis = $Pivot.basis
 	if active:
@@ -28,9 +34,10 @@ func movement(delta: float) -> void:
 	
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
-	if is_on_floor and Input.is_action_just_pressed("jump"):
-		target_velocity.y = jump_impulse
-		direction.y = 0
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor():
+			target_velocity.y = jump_impulse
+			direction.y = 0
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 	velocity = target_velocity
