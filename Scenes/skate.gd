@@ -5,6 +5,7 @@ var camera
 @export var max_speed = 50
 @export var ENGINE_POWER = 200
 @onready var anim_player : AnimationPlayer  = $AnimationPlayer
+@onready var skate_anim : AnimationPlayer
 var target_velocity = Vector3.ZERO
 var fall_acceleration = 20
 var is_player_attached = false
@@ -13,6 +14,7 @@ var original_basis
 var velocity_label
 func _ready() -> void:
 	player = $"../Player"
+	skate_anim = player.get_node("Pivot").get_node("character").get_node("AnimationPlayer")
 	velocity_label = $CanvasLayer/Label
 	velocity_label.visible = false
 	camera = get_parent().get_node("Player").get_child(3)
@@ -30,14 +32,14 @@ func mount_player():
 		is_player_attached = true
 		player.active = false
 		position = player.position
-		player.rotation.y = 5
+		player.rotation.y = 110
 		player.position += Vector3(0,0.5,0)
 func _process(delta: float) -> void:
 	velocity_label.text = "Velocity: " + str(floor(linear_velocity.length()))
 func _physics_process(delta: float) -> void:
 	mount_player()
-	print("plejer" + str(player.get_child(0).basis))
 	if is_player_attached:
+		print(linear_velocity.length())
 		velocity_label.visible =  true
 		if Input.is_action_just_pressed("ui_copy"):
 			player.rotation.y = -player.rotation.y
@@ -49,8 +51,9 @@ func _physics_process(delta: float) -> void:
 			is_player_attached = false
 			
 		if Input.is_action_just_pressed("jump"):
-			anim_player.play("ollie")
-			apply_central_impulse(Vector3(0,2000,0))
+			if is_on_floor():
+				anim_player.play("ollie")
+				apply_central_impulse(Vector3(0,2000,0))
 		if camera.camera_locked:
 			if is_on_floor():
 				if Input.is_action_just_pressed("ollie_down"):
@@ -110,6 +113,12 @@ func _physics_process(delta: float) -> void:
 		steering = move_toward(steering, Input.get_axis("move_right", "move_left") * max_steer, delta * 10)
 		if linear_velocity.length() < 30.0:
 			engine_force = Input.get_axis("brake", "drive") * ENGINE_POWER
+			if Input.get_axis("brake","drive") != 0:
+				player.is_skating = true
+			else:
+				player.is_skating = false
+			print(engine_force)
+			
 			
 		else:
 			engine_force = 0
