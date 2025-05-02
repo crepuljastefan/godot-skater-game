@@ -2,17 +2,31 @@ extends CharacterBody3D
 @export var speed = 14
 @export var fall_acceleration = 75
 @export var jump_impulse = 20
-@onready var anim_player : AnimationPlayer = $"Pivot/AnimationPlayer"
+@onready var anim_tree : AnimationTree = $"Pivot/AnimationTree"
 var active = true
 var is_skating = false
 var target_velocity = Vector3.ZERO
 var original_basis 
-func _process(delta: float) -> void:
-	if is_skating:
-		anim_player.play("skate")
-	else:
-		anim_player.stop()
+enum anim {IDLE, SKATE}
+var cur_anim = anim.IDLE
+var skate_val = 0.0
+var blend_speed = 3.0
+func update_tree(): 
+	anim_tree["parameters/Blend2/blend_amount"] = skate_val
+func handle_animations(delta):
+	match cur_anim:
+		anim.IDLE:
+			skate_val = lerpf(skate_val,0,blend_speed*delta)
+		anim.SKATE:
+			skate_val = lerpf(skate_val,1,blend_speed*delta)
+
 func _physics_process(delta: float) -> void:
+	if is_skating:
+		cur_anim = anim.SKATE
+	else:
+		cur_anim = anim.IDLE
+	update_tree()
+	handle_animations(delta)
 	original_basis = $Pivot.basis
 	if active:
 		$Pivot.basis = original_basis
