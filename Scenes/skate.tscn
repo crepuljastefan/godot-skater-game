@@ -241,9 +241,12 @@ shape = SubResource("CylinderShape3D_kolag")
 
 [node name="VehicleWheel3D" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.387871, -0.182097, 0.884622)
+steering = 2.18166
 use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.15
+wheel_friction_slip = 5.0
+suspension_stiffness = 5.0
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.387871, -0.182144, -0.85429)
@@ -256,10 +259,13 @@ use_as_traction = true
 wheel_radius = 0.15
 
 [node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.361496, -0.182144, 0.872852)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.361, -0.182, 0.885)
+steering = 2.18166
 use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.15
+wheel_friction_slip = 5.0
+suspension_stiffness = 5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

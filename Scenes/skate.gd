@@ -3,9 +3,9 @@ var player
 var camera
 @export var max_steer = 1
 @export var max_speed = 50
-@export var ENGINE_POWER = 200
+@export var ENGINE_POWER = 400
 @onready var anim_player : AnimationPlayer  = $AnimationPlayer
-@onready var skate_anim : AnimationPlayer
+@onready var skate_anim : AnimationTree
 var target_velocity = Vector3.ZERO
 var fall_acceleration = 20
 var is_player_attached = false
@@ -14,7 +14,7 @@ var original_basis
 var velocity_label
 func _ready() -> void:
 	player = $"../Player"
-	skate_anim = player.get_node("Pivot").get_node("character").get_node("AnimationPlayer")
+	skate_anim = player.get_node("Pivot").get_node("character").get_node("AnimationTree")
 	velocity_label = $CanvasLayer/Label
 	velocity_label.visible = false
 	camera = get_parent().get_node("Player").get_child(3)
@@ -52,8 +52,9 @@ func _physics_process(delta: float) -> void:
 			
 		if Input.is_action_just_pressed("jump"):
 			if is_on_floor():
+				player.cur_anim = player.anim.IDLE
 				anim_player.play("ollie")
-				apply_central_impulse(Vector3(0,2000,0))
+				apply_impulse(Vector3(0,1000,0),Vector3(0,-2,0))
 		if camera.camera_locked:
 			if is_on_floor():
 				if Input.is_action_just_pressed("ollie_down"):
@@ -62,7 +63,7 @@ func _physics_process(delta: float) -> void:
 					$Timer.stop()
 
 					anim_player.play("ollie")
-					apply_central_impulse(Vector3(0,3000,0))
+					apply_central_impulse(Vector3(0,1000,0))
 					$Timer2.start(0.017)
 			if not is_on_floor() and not $Timer2.is_stopped():
 				if Input.is_action_just_pressed("move_forward"):
@@ -110,14 +111,18 @@ func _physics_process(delta: float) -> void:
 			
 			
 			
-		steering = move_toward(steering, Input.get_axis("move_right", "move_left") * max_steer, delta * 10)
-		if linear_velocity.length() < 30.0:
-			engine_force = Input.get_axis("brake", "drive") * ENGINE_POWER
+		steering = move_toward(steering, Input.get_axis("move_right", "move_left") * max_steer, delta * 30)
+		if linear_velocity.length() < 20:
+			#engine_force = Input.get_axis("brake", "drive") * ENGINE_POWER
+			print(linear_velocity)
+			var current_engine_force = move_toward(engine_force, Input.get_axis("brake", "drive") * ENGINE_POWER, delta * 125)
+			engine_force = current_engine_force
 			if Input.get_axis("brake","drive") != 0:
 				player.is_skating = true
+				
 			else:
 				player.is_skating = false
-			print(engine_force)
+			#print(engine_force)
 			
 			
 		else:
