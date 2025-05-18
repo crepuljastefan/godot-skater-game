@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://duhwe10i46ig"]
+[gd_scene load_steps=14 format=3 uid="uid://duhwe10i46ig"]
 
 [ext_resource type="Script" uid="uid://cwpub7gkahrj7" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://djxxkc6rc4ohs" path="res://character.fbx" id="2_6t5aa"]
@@ -1408,11 +1408,9 @@ nodes/Skate/position = Vector2(120, 460)
 nodes/output/position = Vector2(480, 200)
 node_connections = [&"Blend2", 0, &"Idle", &"Blend2", 1, &"Skate", &"output", 0, &"Blend2"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_6t5aa"]
-size = Vector3(0.768799, 1.77753, 0.437256)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_vgqql"]
-size = Vector3(0.771118, 0.767212, 0.802063)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t5aa"]
+radius = 0.139403
+height = 1.64863
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_onrkg"]
 
@@ -1499,15 +1497,11 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/Blend2/blend_amount = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.899205, 0.00231934)
-shape = SubResource("BoxShape3D_6t5aa")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00115967, 2.81945, 0.00784302)
-shape = SubResource("BoxShape3D_vgqql")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00453085, 0.846307, -0.0698686)
+shape = SubResource("CapsuleShape3D_6t5aa")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.49759, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2236, 0)
 shape = SubResource("SphereShape3D_onrkg")
 spring_length = 6.0
 script = ExtResource("3_i3pqv")
