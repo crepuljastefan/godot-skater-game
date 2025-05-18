@@ -9,7 +9,9 @@ var camera
 
 @export var speed := 10.0
 @export var acceleration := 10.0
-@export var jump_strength := 15.0
+@export var jump_strength := 300.0
+var is_turning = false
+var original_velocity
 
 var input_direction := Vector3.ZERO
 var target_velocity := Vector3.ZERO
@@ -26,14 +28,15 @@ func _ready() -> void:
 	skate_anim = player.get_node("Pivot").get_node("character").get_node("AnimationTree")
 	velocity_label = $CanvasLayer/Label
 	velocity_label.visible = false
-	camera = get_parent().get_node("Player").get_child(3)
+	camera = get_parent().get_node("Player").get_child(2)
 func is_on_floor() -> bool:
 	var raycasts = [$RayCast3D,$RayCast3D2,$RayCast3D3,$RayCast3D4]
 	for raycast in raycasts:
 		if not raycast.is_colliding():
 			return false
 	return true
-func skating():
+func skating(delta):
+	is_turning = false
 	var input := Vector3.ZERO
 	input.x = Input.get_axis("move_left", "move_right")
 	input.y = Input.get_axis("drive", "brake")
@@ -42,32 +45,28 @@ func skating():
 		forward_speed = 1
 	elif forward_speed < -0.01: 
 		forward_speed = -1
-	print(forward_speed)
-	if linear_velocity.length() < 20:
-		apply_central_force(input.y * ENGINE_POWER * -transform.basis.z)
 	if is_on_floor():
+		if linear_velocity.length() < 20:
+			apply_central_force(input.y * ENGINE_POWER* -transform.basis.z)
 		if Input.is_action_pressed("move_left"):
+			original_velocity = linear_velocity
+			is_turning = true
 			#apply_central_force(input.y * ENGINE_POWER * transform.basis.z)
 			var curr_speed = linear_velocity.length()
 			rotation.y += 0.02
-			linear_velocity = -forward_speed * transform.basis.z * curr_speed
-			print(target_velocity - linear_velocity)
+			linear_velocity = -forward_speed * transform.basis.z * curr_speed + Vector3(0,linear_velocity.y,0)
 		if Input.is_action_pressed("move_right"):
+			is_turning = true
 			#apply_central_force(input.y * ENGINE_POWER * transform.basis.z)
 			var curr_speed = linear_velocity.length()
 			rotation.y -= 0.02
-			linear_velocity = -forward_speed * transform.basis.z * curr_speed
+			linear_velocity = -forward_speed * transform.basis.z * curr_speed + Vector3(0,linear_velocity.y,0)
 	
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
-			var original = jump_strength
-			jump_strength = original
+		if is_on_floor():			
 			player.cur_anim = player.anim.IDLE
-			#apply_impulse(Vector3(0,jump_strength,0),Vector3.UP)
-			#linear_velocity.y += 20
 			anim_player.play("ollie")
-			apply_central_force(Vector3.UP * jump_strength * 100) # OVO JOS NE VALJA
-			
+			apply_central_force(Vector3.UP * jump_strength)
 func play_anim(anim: String):
 	print($Timer2.time_left)
 	anim_player.play(anim)
@@ -83,6 +82,7 @@ func mount_player():
 			player.active = false
 			position = player.position
 			position.y += 0.5
+			rotation.y = player.rotation.y
 			player.rotation.y = 3
 			player.position += Vector3(0,0.5,0)
 func _process(delta: float) -> void:
@@ -140,15 +140,21 @@ func _physics_process(delta: float) -> void:
 				
 				
 			
-		skating()
+		skating(delta)
 		if Input.get_axis("brake","drive") != 0:
 			player.is_skating = true
 			
 		else:
 			player.is_skating = false
 			#print(engine_force)
+		#freeze = true
+		#position.y = 10
 		
-		player.position = position
-		player.get_child(0).basis = basis
+		var pivot = player.get_node("Pivot")
+		print("player: ", pivot.rotation.x, " skate: ", rotation.x)
+		
+		pivot.rotation.x = -rotation.x
+		pivot.rotation.y = rotation.y
+		player.global_position = global_position
 	else:
 		velocity_label.visible = false	
