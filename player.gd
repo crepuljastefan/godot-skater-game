@@ -1,7 +1,7 @@
 extends CharacterBody3D
 @export var speed = 14
 @export var fall_acceleration = 75
-@export var jump_impulse = 20
+@export var jump_impulse = 5
 @onready var anim_tree : AnimationTree = $"Pivot/AnimationTree"
 var active = true
 var is_skating = false
@@ -50,7 +50,7 @@ func movement(delta: float) -> void:
 	target_velocity.z = direction.z * speed
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
-			target_velocity.y = jump_impulse
+			target_velocity.y = jump_impulse*3
 			direction.y = 0
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
