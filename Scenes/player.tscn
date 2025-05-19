@@ -1409,8 +1409,8 @@ nodes/output/position = Vector2(480, 200)
 node_connections = [&"Blend2", 0, &"Idle", &"Blend2", 1, &"Skate", &"output", 0, &"Blend2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t5aa"]
-radius = 0.139403
-height = 1.64863
+radius = 0.0819158
+height = 1.22125
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_onrkg"]
 
@@ -1497,7 +1497,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/Blend2/blend_amount = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00453085, 0.846307, -0.0698686)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00453085, 0.631699, -0.0698686)
 shape = SubResource("CapsuleShape3D_6t5aa")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
