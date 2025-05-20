@@ -37,9 +37,11 @@ func is_on_floor() -> bool:
 func get_ramp_collision():
 	var raycasts = [$RayCast3D,$RayCast3D2,$RayCast3D3,$RayCast3D4]
 	var avg_steepness = 0
+	var avg_dir = 0
 	for raycast in raycasts:
 		avg_steepness += raycast.get_collision_normal().y
-	return 1 - avg_steepness/raycasts.size()
+		avg_dir += raycast.get_collision_normal().z
+	return Vector3(0,1 - avg_steepness/raycasts.size(), avg_dir/raycasts.size())
 func skating(delta):
 	is_turning = false
 	var input := Vector3.ZERO
@@ -50,11 +52,12 @@ func skating(delta):
 		forward_speed = 1
 	elif forward_speed < -0.01: 
 		forward_speed = -1
-	print(get_ramp_collision())
+	#print(get_ramp_collision())
 	if is_on_floor():
-		if get_ramp_collision() > 0.1:
-			print(input.y)
-			apply_central_force(input.y * 0.5 * ENGINE_POWER * -transform.basis.z)
+		if get_ramp_collision().y > 0.1:
+			#apply_central_force(50 * -transform.basis.sz * get_ramp_collision().z)
+			apply_central_force(transform.basis.z * 20 * get_ramp_collision().z)
+			apply_central_force(input.y * 1 * ENGINE_POWER * -transform.basis.z)
 		if linear_velocity.length() < 20:
 			apply_central_force(input.y * ENGINE_POWER* -transform.basis.z)
 		if Input.is_action_pressed("move_left"):
