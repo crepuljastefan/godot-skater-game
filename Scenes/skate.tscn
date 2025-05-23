@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://douee6pmp57d0"]
+[gd_scene load_steps=21 format=3 uid="uid://douee6pmp57d0"]
 
 [ext_resource type="Script" uid="uid://cv6nfpnws74uf" path="res://Scenes/skate.gd" id="1_b0wo0"]
 [ext_resource type="PackedScene" uid="uid://c76gsse0mh8lq" path="res://Scenes/skate.glb" id="1_j72mx"]
@@ -213,6 +213,10 @@ _data = {
 &"trifip": SubResource("Animation_5emtc")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_b0wo0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_my1ux"]
+
 [node name="Skate" type="RigidBody3D"]
 script = ExtResource("1_b0wo0")
 
@@ -260,6 +264,18 @@ transform = Transform3D(1, 0, 0, 0, 0.14, 0, 0, 0, 1, -0.376003, -0.18494, -0.89
 [node name="RayCast3D4" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.14, 0, 0, 0, 1, 0.388773, -0.18494, -0.891297)
 
+[node name="BackGrind" type="ShapeCast3D" parent="."]
+transform = Transform3D(0.6157, 0, 0, 0, 0.0653095, 0, 0, 0, 0.0520811, 0.004, -0.119768, -0.864581)
+shape = SubResource("BoxShape3D_b0wo0")
+
+[node name="FrontGrind" type="ShapeCast3D" parent="."]
+transform = Transform3D(0.6157, 0, 0, 0, 0.0653095, 0, 0, 0, 0.0520811, 0.004, -0.119768, 0.8887)
+shape = SubResource("BoxShape3D_b0wo0")
+
+[node name="SlideRayCast" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.14, 0, 0, 0, 1, 0.00376669, -0.04234, 0.00203569)
+shape = SubResource("BoxShape3D_my1ux")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -268,5 +284,11 @@ offset_top = 559.0
 offset_right = 511.0
 offset_bottom = 582.0
 text = "Velocity"
+
+[node name="Front" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.76375)
+
+[node name="Back" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.75212)
 
 [editable path="Sketchfab_Scene"]

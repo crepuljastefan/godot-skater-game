@@ -1,5 +1,5 @@
 extends SpringArm3D
-@export var mouse_sens: float = 0.05
+@export var mouse_sens: float = 0.005
 @export var controller_sens: float = 1.5
 @onready var player: Node3D = get_parent().get_node("Pivot")
 @export var camera_locked = false
