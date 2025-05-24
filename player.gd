@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		pass
 func movement(delta: float) -> void:
-	var spring_arm = get_node("SpringArm3D")
+	var spring_arm = get_node("SpringArmPivot")
 	var direction = Vector3.ZERO
 	var input := Vector3.ZERO
 	input.x = Input.get_axis("move_left", "move_right")

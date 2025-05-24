@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://duhwe10i46ig"]
+[gd_scene load_steps=15 format=3 uid="uid://duhwe10i46ig"]
 
 [ext_resource type="Script" uid="uid://cwpub7gkahrj7" path="res://player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://djxxkc6rc4ohs" path="res://character.fbx" id="2_6t5aa"]
 [ext_resource type="Script" uid="uid://comumyjhkp8su" path="res://spring_arm_3d.gd" id="3_i3pqv"]
+[ext_resource type="Script" uid="uid://bbamxqh1hpp4m" path="res://Scenes/spring_arm_pivot.gd" id="3_vgqql"]
 
 [sub_resource type="Animation" id="Animation_fkybt"]
 length = 0.001
@@ -1500,12 +1501,17 @@ parameters/Blend2/blend_amount = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00453085, 0.631699, -0.0698686)
 shape = SubResource("CapsuleShape3D_6t5aa")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2236, 0)
+[node name="SpringArmPivot" type="Node3D" parent="."]
+script = ExtResource("3_vgqql")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445553, 1.224, 0.000240207)
 shape = SubResource("SphereShape3D_onrkg")
-spring_length = 6.0
+spring_length = 3.0
+margin = 0.1
 script = ExtResource("3_i3pqv")
 
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00683481, 0, 0.00291395)
 
 [editable path="Pivot/character"]

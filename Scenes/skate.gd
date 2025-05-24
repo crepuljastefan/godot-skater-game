@@ -86,9 +86,7 @@ func handle_grind(grind_data, delta):
 					dir = -dir
 					start_pos = end
 					end_pos = start
-					print("OOOOOOOOOOOOOOOOooo RUKFAS")
 				progress = (position - start_pos).length()
-				print("OOOO:   ", progress + skate_len, len)
 				grinding = true
 			
 			else:
