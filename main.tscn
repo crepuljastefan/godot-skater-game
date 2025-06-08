@@ -34,7 +34,7 @@ height = 709.617
 [node name="Node3D" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -37.2071, 16.3372, -27.579)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -9.94142, 2.50747, -34.2757)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.159183, 0.986857, 0.0278109, 0.871942, -0.153747, 0.464843, 0.463009, -0.0497456, -0.884956, -3.80291, 43.2733, 46.7266)
@@ -42,6 +42,12 @@ shadow_enabled = true
 
 [node name="Skate" parent="." instance=ExtResource("2_0xm2m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.536, 8.20314, 0)
+max_steer = 1
+max_speed = 50
+ENGINE_POWER = 20
+speed = 10.0
+acceleration = 10.0
+jump_strength = 400.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_lquwl")
