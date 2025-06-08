@@ -1399,7 +1399,7 @@ animation = &"idle"
 animation = &"skate"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fkybt"]
-graph_offset = Vector2(-349.457, 102.253)
+graph_offset = Vector2(-420.146, 59.4455)
 nodes/Blend2/node = SubResource("AnimationNodeBlend2_6t5aa")
 nodes/Blend2/position = Vector2(300, 180)
 nodes/Idle/node = SubResource("AnimationNodeAnimation_vgqql")
@@ -1505,7 +1505,7 @@ shape = SubResource("CapsuleShape3D_6t5aa")
 script = ExtResource("3_vgqql")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445553, 1.224, 0.000240207)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.593315, 1.224, 0.000240207)
 shape = SubResource("SphereShape3D_onrkg")
 spring_length = 3.0
 margin = 0.1

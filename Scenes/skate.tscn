@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://douee6pmp57d0"]
+[gd_scene load_steps=25 format=3 uid="uid://douee6pmp57d0"]
 
 [ext_resource type="Script" uid="uid://cv6nfpnws74uf" path="res://Scenes/skate.gd" id="1_b0wo0"]
 [ext_resource type="PackedScene" uid="uid://c76gsse0mh8lq" path="res://Scenes/skate.glb" id="1_j72mx"]
@@ -217,11 +217,31 @@ _data = {
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_my1ux"]
 
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_b0wo0"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_my1ux"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kolag"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vvpow"]
+graph_offset = Vector2(-160.403, 78.8042)
+nodes/Blend2/node = SubResource("AnimationNodeBlend2_b0wo0")
+nodes/Blend2/position = Vector2(567.121, 224.337)
+nodes/Idle/node = SubResource("AnimationNodeAnimation_my1ux")
+nodes/Idle/position = Vector2(180, 160)
+nodes/Turn/node = SubResource("AnimationNodeAnimation_kolag")
+nodes/Turn/position = Vector2(399.415, 486.544)
+nodes/output/position = Vector2(800, 180)
+node_connections = [&"Blend2", 0, &"Idle", &"Blend2", 1, &"Turn", &"output", 0, &"Blend2"]
+
 [node name="Skate" type="RigidBody3D"]
 script = ExtResource("1_b0wo0")
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("1_j72mx")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="skate_low_04" parent="Sketchfab_Scene/Sketchfab_model/6ac613c627e34f3c8b5fca7ffb3c054e_fbx/RootNode/Skate_low" index="3"]
+transform = Transform3D(6.00799, 0, 1.19068, 0, 2.50528, 0, -1.19068, 0, 6.00799, 5.32907e-14, -2.33463, 27.2171)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0197754, -0.00070858)
@@ -290,5 +310,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.76375)
 
 [node name="Back" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.75212)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_vvpow")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Blend2/blend_amount = 0
 
 [editable path="Sketchfab_Scene"]
